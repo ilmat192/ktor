@@ -77,6 +77,7 @@ fun Project.configureJvm() {
     val jvmTest: KotlinJvmTest = tasks.getByName<KotlinJvmTest>("jvmTest") {
         ignoreFailures = true
         maxHeapSize = "2g"
+        jvmArgs("-XX:+HeapDumpOnOutOfMemoryError")
         exclude("**/*StressTest *")
     }
 
@@ -86,7 +87,7 @@ fun Project.configureJvm() {
 
         ignoreFailures = true
         maxHeapSize = "2g"
-        jvmArgs("-XX:+HeapDumpOnOutOfMemoryError")
+        jvmArgs("""-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=./oom_dump.hprof""")
         setForkEvery(1)
         systemProperty("enable.stress.tests", "true")
         include("**/*StressTest*")
